@@ -1,100 +1,138 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Lass Vision</title>
-<style>
-body {
-  margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background:#f5f5f5;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lass Vision - Custom</title>
 
-header {
-  background: linear-gradient(90deg, #0b3d91, #ff6600);
-  color:white;
-  padding:40px;
-  text-align:center;
-}
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; }
 
-h1 { margin:0; font-size:40px; }
+    header {
+      height: 90vh;
+      background: url('banner.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
 
-section {
-  padding:40px;
-  text-align:center;
-}
+    header::after {
+      content: "";
+      position: absolute;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
 
-.card {
-  background:white;
-  padding:20px;
-  margin:20px auto;
-  max-width:500px;
-  border-radius:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
+    .hero { position: relative; z-index: 1; }
 
-.btn {
-  display:inline-block;
-  padding:15px 25px;
-  margin-top:15px;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
-}
+    .cta {
+      margin-top: 20px;
+      padding: 15px 25px;
+      background: #22c55e;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+    }
 
-.whatsapp { background:#25D366; color:white; }
-.pay { background:#ff6600; color:white; }
+    section { padding: 50px 20px; }
 
-input, textarea {
-  width:90%;
-  padding:10px;
-  margin:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
 
-button {
-  background:#0b3d91;
-  color:white;
-  padding:12px 20px;
-  border:none;
-  border-radius:20px;
-}
-</style>
+    .card {
+      background: #1e293b;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .card img { width: 100%; height: 220px; object-fit: cover; }
+
+    .card-content { padding: 15px; text-align: center; }
+
+    .price { color: #22c55e; font-weight: bold; }
+
+    .btn { display: inline-block; padding: 10px; background: #22c55e; color: white; border-radius: 8px; text-decoration: none; }
+
+    .customizer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .preview {
+      width: 250px;
+      height: 250px;
+      background: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab') center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 15px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 200px;
+    }
+
+    footer { text-align: center; padding: 20px; background: #020617; }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <h1>LASS VISION</h1>
-  <p>Conception & Impression tout support</p>
+  <div class="hero">
+    <h1>LASS VISION</h1>
+    <p>Personnalise ton style</p>
+    <a class="cta" href="#custom">Créer maintenant</a>
+  </div>
 </header>
 
-<section>
-  <div class="card">
-    <h2>Nos Services</h2>
-    <p>Maillots, T-shirts, Flyers, Bâches, Sérigraphie, etc.</p>
-  </div>
+<section id="custom">
+  <h2 style="text-align:center">Personnalise ton t-shirt</h2>
 
-  <div class="card">
-    <h2>Commander</h2>
-    <form action="https://formspree.io/f/TON_ID" method="POST">
-      <input type="text" name="nom" placeholder="Votre nom" required>
-      <input type="tel" name="telephone" placeholder="Téléphone">
-      <textarea name="commande" placeholder="Votre commande"></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-  </div>
+  <div class="customizer">
+    <div class="preview" id="previewText">TON NOM</div>
 
-  <div class="card">
-    <h2>Paiement</h2>
-    <p>Paiement via Wave / Orange Money</p>
-    <p><strong>77 708 95 54</strong></p>
-    <p>Envoyez la preuve sur WhatsApp</p>
-    <a class="btn whatsapp" href="https://wa.me/221777089554">WhatsApp</a>
-  </div>
+    <input type="text" id="nameInput" placeholder="Ton nom">
+    <input type="number" id="numberInput" placeholder="Numéro">
 
+    <a class="btn" id="orderBtn" target="_blank">Commander sur WhatsApp</a>
+  </div>
 </section>
+
+<footer>
+  <p>WhatsApp : 77 708 95 54</p>
+</footer>
+
+<script>
+  const nameInput = document.getElementById('nameInput');
+  const numberInput = document.getElementById('numberInput');
+  const preview = document.getElementById('previewText');
+  const orderBtn = document.getElementById('orderBtn');
+
+  function updatePreview() {
+    const name = nameInput.value || 'TON NOM';
+    const number = numberInput.value || '';
+    preview.innerText = name + ' ' + number;
+
+    const message = `Je veux un t-shirt avec Nom: ${name} Numéro: ${number}`;
+    orderBtn.href = `https://wa.me/221777089554?text=${encodeURIComponent(message)}`;
+  }
+
+  nameInput.addEventListener('input', updatePreview);
+  numberInput.addEventListener('input', updatePreview);
+</script>
 
 </body>
 </html>
